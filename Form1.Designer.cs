@@ -39,6 +39,8 @@
             this.AmountOfThreadsTB = new System.Windows.Forms.TextBox();
             this.GenerateBtn = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.singleRadio = new System.Windows.Forms.RadioButton();
+            this.multiRadio = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -125,7 +127,7 @@
             // 
             // GenerateBtn
             // 
-            this.GenerateBtn.Location = new System.Drawing.Point(57, 184);
+            this.GenerateBtn.Location = new System.Drawing.Point(55, 318);
             this.GenerateBtn.Name = "GenerateBtn";
             this.GenerateBtn.Size = new System.Drawing.Size(105, 45);
             this.GenerateBtn.TabIndex = 9;
@@ -142,11 +144,35 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             // 
+            // singleRadio
+            // 
+            this.singleRadio.AutoSize = true;
+            this.singleRadio.Location = new System.Drawing.Point(15, 176);
+            this.singleRadio.Name = "singleRadio";
+            this.singleRadio.Size = new System.Drawing.Size(85, 17);
+            this.singleRadio.TabIndex = 11;
+            this.singleRadio.TabStop = true;
+            this.singleRadio.Text = "single thread";
+            this.singleRadio.UseVisualStyleBackColor = true;
+            // 
+            // multiRadio
+            // 
+            this.multiRadio.AutoSize = true;
+            this.multiRadio.Location = new System.Drawing.Point(15, 199);
+            this.multiRadio.Name = "multiRadio";
+            this.multiRadio.Size = new System.Drawing.Size(79, 17);
+            this.multiRadio.TabIndex = 12;
+            this.multiRadio.TabStop = true;
+            this.multiRadio.Text = "multi thread";
+            this.multiRadio.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.multiRadio);
+            this.Controls.Add(this.singleRadio);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.GenerateBtn);
             this.Controls.Add(this.AmountOfThreadsTB);
@@ -180,6 +206,8 @@
         private System.Windows.Forms.TextBox AmountOfThreadsTB;
         private System.Windows.Forms.Button GenerateBtn;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.RadioButton singleRadio;
+        private System.Windows.Forms.RadioButton multiRadio;
     }
 }
 

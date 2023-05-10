@@ -67,6 +67,65 @@ namespace Voronoi_firs
             pictureBox1.Image = bmp;
         }
 
+        private void DrawVoronoiDiagramMultiThread()
+        {
+            // Create a new bitmap
+            var bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+            // Divide the bitmap into smaller regions
+            int numThreads = Environment.ProcessorCount;
+            int regionWidth = bmp.Width / numThreads;
+            List<Rectangle> regions = new List<Rectangle>();
+            for (int i = 0; i < numThreads; i++)
+            {
+                regions.Add(new Rectangle(i * regionWidth, 0, regionWidth, bmp.Height));
+            }
+
+            // Process each region in a separate thread
+            var tasks = new List<Task>();
+            foreach (var region in regions)
+            {
+                tasks.Add(Task.Run(() =>
+                {
+                    // Loop through each pixel in the region
+                    for (var x = region.X; x < region.X + region.Width; x++)
+                    {
+                        for (var y = region.Y; y < region.Y + region.Height; y++)
+                        {
+                            // Find the closest point
+                            var closestPoint = FindClosestPoint(new Point(x, y));
+
+                            // Set the pixel color to the color of the closest point's Voronoi cell
+                            if (closestPoint != null)
+                            {
+                                lock (_cellColors)
+                                {
+                                    bmp.SetPixel(x, y, _cellColors[closestPoint.Value]);
+                                }
+                            }
+                        }
+                    }
+                }));
+            }
+
+            // Wait for all threads to finish
+            Task.WaitAll(tasks.ToArray());
+
+            // Draw points
+            using (var g = Graphics.FromImage(bmp))
+            {
+                var pointSize = 3;
+                foreach (var point in _points)
+                {
+                    var brush = new SolidBrush(Color.Black);
+                    g.FillEllipse(brush, point.X - pointSize / 2, point.Y - pointSize / 2, pointSize, pointSize);
+                }
+            }
+
+            // Set the PictureBox image to the bitmap
+            pictureBox1.Image = bmp;
+        }
+
         private Point? FindClosestPoint(Point p)
         {
             // Find the closest point to the given point
@@ -117,7 +176,15 @@ namespace Voronoi_firs
             }
 
             // Draw the Voronoi diagram
-            DrawVoronoiDiagram();
+            if (singleRadio.Checked)
+            {
+                DrawVoronoiDiagram();
+            }
+            else if (multiRadio.Checked)
+            {
+                DrawVoronoiDiagramMultiThread();
+            }
+            
         }
     }
 }
