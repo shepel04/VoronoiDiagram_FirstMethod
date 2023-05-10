@@ -41,6 +41,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.singleRadio = new System.Windows.Forms.RadioButton();
             this.multiRadio = new System.Windows.Forms.RadioButton();
+            this.ShowPointsCB = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -166,11 +167,23 @@
             this.multiRadio.Text = "multi thread";
             this.multiRadio.UseVisualStyleBackColor = true;
             // 
+            // ShowPointsCB
+            // 
+            this.ShowPointsCB.AutoSize = true;
+            this.ShowPointsCB.Location = new System.Drawing.Point(12, 222);
+            this.ShowPointsCB.Name = "ShowPointsCB";
+            this.ShowPointsCB.Size = new System.Drawing.Size(82, 17);
+            this.ShowPointsCB.TabIndex = 13;
+            this.ShowPointsCB.Text = "show points";
+            this.ShowPointsCB.UseVisualStyleBackColor = true;
+            this.ShowPointsCB.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ShowPointsCB);
             this.Controls.Add(this.multiRadio);
             this.Controls.Add(this.singleRadio);
             this.Controls.Add(this.pictureBox1);
@@ -208,6 +221,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.RadioButton singleRadio;
         private System.Windows.Forms.RadioButton multiRadio;
+        private System.Windows.Forms.CheckBox ShowPointsCB;
     }
 }
 

@@ -53,14 +53,9 @@ namespace Voronoi_firs
             }
 
             // Draw points
-            using (var g = Graphics.FromImage(bmp))
+            if (ShowPointsCB.Checked)
             {
-                var pointSize = 3;
-                foreach (var point in _points)
-                {
-                    var brush = new SolidBrush(Color.Black);
-                    g.FillEllipse(brush, point.X - pointSize / 2, point.Y - pointSize / 2, pointSize, pointSize);
-                }
+                DrawPoints(bmp);
             }
 
             // Set the PictureBox image to the bitmap
@@ -73,7 +68,15 @@ namespace Voronoi_firs
             var bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
             // Divide the bitmap into smaller regions
-            int numThreads = Environment.ProcessorCount;
+            int numThreads;
+            if (AmountOfThreadsTB.Text == String.Empty)
+            {
+                numThreads = Environment.ProcessorCount;
+            }
+            else 
+            {
+                numThreads = Int32.Parse(AmountOfThreadsTB.Text);
+            }
             int regionWidth = bmp.Width / numThreads;
             List<Rectangle> regions = new List<Rectangle>();
             for (int i = 0; i < numThreads; i++)
@@ -108,10 +111,21 @@ namespace Voronoi_firs
                 }));
             }
 
+            
             // Wait for all threads to finish
             Task.WaitAll(tasks.ToArray());
 
+            if (ShowPointsCB.Checked)
+            {
+                DrawPoints(bmp);
+            }
+
             // Draw points
+            pictureBox1.Image = bmp;
+        }
+
+        private void DrawPoints(Bitmap bmp)
+        {
             using (var g = Graphics.FromImage(bmp))
             {
                 var pointSize = 3;
@@ -160,6 +174,8 @@ namespace Voronoi_firs
 
         private void GenerateBtn_Click(object sender, EventArgs e)
         {
+            _points.Clear();
+            _cellColors.Clear();
             int numPoints = Int32.Parse(AmountOfPointsTB.Text);
             pictureBox1.Width = Int32.Parse(FieldWidthTB.Text);
             pictureBox1.Height = Int32.Parse(FieldHeightTB.Text);
@@ -186,5 +202,12 @@ namespace Voronoi_firs
             }
             
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
